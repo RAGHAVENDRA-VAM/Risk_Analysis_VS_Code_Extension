@@ -1,0 +1,124 @@
+{
+  "name": "ai-devops-risk-analyzer-vscode",
+  "displayName": "AI DevOps Risk Analyzer",
+  "version": "1.1.0",
+  "publisher": "raghava-ai",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other",
+    "Linters"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "AI DevOps Risk Analyzer",
+      "properties": {
+        "aiDevOpsRisk.apiUrl": {
+          "type": "string",
+          "default": "https://devops-risk-analyzer-api-enejenekbsg7f9cc.centralus-01.azurewebsites.net",
+          "description": "FastAPI backend URL."
+        },
+        "aiDevOpsRisk.accessToken": {
+          "type": "string",
+          "default": "",
+          "description": "JWT sent to the FastAPI backend.",
+          "scope": "machine"
+        },
+        "aiDevOpsRisk.analyzeOnSave": {
+          "type": "boolean",
+          "default": true
+        },
+        "aiDevOpsRisk.typingDebounceMs": {
+          "type": "number",
+          "default": 1200,
+          "minimum": 300
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "aiDevOpsRisk.analyzeCurrentFile",
+        "title": "AI DevOps: Analyze Current File"
+      },
+      {
+        "command": "aiDevOpsRisk.analyzeSelectedCode",
+        "title": "AI DevOps: Analyze Selected Code"
+      },
+      {
+        "command": "aiDevOpsRisk.analyzeWorkspace",
+        "title": "AI DevOps: Analyze Workspace"
+      },
+      {
+        "command": "aiDevOpsRisk.analyzeGitChanges",
+        "title": "AI DevOps: Analyze Git Changes"
+      },
+      {
+        "command": "aiDevOpsRisk.analyzeCommit",
+        "title": "AI DevOps: Pre-Commit Analysis"
+      },
+      {
+        "command": "aiDevOpsRisk.analyzeTerraform",
+        "title": "AI DevOps: Analyze Terraform"
+      },
+      {
+        "command": "aiDevOpsRisk.analyzeKubernetes",
+        "title": "AI DevOps: Analyze Kubernetes"
+      },
+      {
+        "command": "aiDevOpsRisk.analyzeDockerfile",
+        "title": "AI DevOps: Analyze Dockerfile"
+      },
+      {
+        "command": "aiDevOpsRisk.analyzePipeline",
+        "title": "AI DevOps: Analyze Pipeline YAML"
+      },
+      {
+        "command": "aiDevOpsRisk.installPreCommitHook",
+        "title": "AI DevOps: Install Pre-Commit Hook"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "aiDevOpsRisk",
+          "title": "AI DevOps",
+          "icon": "resources/risk.svg"
+        }
+      ]
+    },
+    "views": {
+      "aiDevOpsRisk": [
+        {
+          "id": "aiDevOpsRisk.findings",
+          "name": "Risk Findings",
+          "type": "webview"
+        }
+      ]
+    },
+    "menus": {
+      "editor/context": [
+        {
+          "command": "aiDevOpsRisk.analyzeSelectedCode",
+          "group": "aiDevOpsRisk@1",
+          "when": "editorHasSelection"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p .",
+    "package": "vsce package"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "@types/vscode": "^1.90.0",
+    "@vscode/vsce": "^3.0.0",
+    "typescript": "^5.5.4"
+  }
+}
